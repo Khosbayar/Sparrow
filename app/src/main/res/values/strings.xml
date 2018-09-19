@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Sparrow</string>
+    <string name="label_sizes">Хэмжээсүүд</string>
+    <string name="label_easy">Easy</string>
+    <string name="label_normal">Normal</string>
+    <string name="label_hard">Hard</string>
+    <string name="label_comingsoon">Coming soon</string>
+    <string name="desc_refresh">refresh</string>
+    <string name="tv_text_lvl">LVL:</string>
+    <string name="desc_shape_img">Shape img</string>
+    <string name="desc_shape_info">Shape Order Information</string>
+    <string name="tv_text_clicked">Clicked:</string>
+    <string name="tv_txt_maximum">Maximum:</string>
+    <string name="tv_text_how_to_play">HOW TO PLAY?</string>
+    <string name="desc_introduction">Introduction</string>
+    <string name="tv_text_lvl1">LEVEL (NEWBIE)</string>
+    <string name="tv_text_lvl2">LEVEL (NORMAL)</string>
+    <string name="tv_text_lvl3">LEVEL (LEGEND)</string>
+    <string name="desc_main_menu_img">Main menu image</string>
+    <string name="desc_button_play">Button play</string>
+    <string name="desc_button_how_to">Button how to</string>
+    <string name="desc_img_smile">Smile</string>
+    <string name="tv_text_voila">VOILA!</string>
+    <string name="tv_text_your_score">YOUR SCORE:</string>
+    <string name="desc_non_smile">Non smile</string>
+    <string name="tv_text_sorry_you_lose">SORRY, YOU LOSE...</string>
+</resources>

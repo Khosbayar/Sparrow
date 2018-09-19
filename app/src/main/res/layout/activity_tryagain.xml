@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_background_green"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textsDaraltHetersen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:text="@string/tv_text_sorry_you_lose"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/desc_non_smile"
+            android:src="@drawable/non_smile" />
+
+        <ImageButton
+            android:id="@+id/btn_retry"
+            android:layout_width="198dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_retry_eng"
+            android:contentDescription="@string/desc_shape_img" />
+
+        <ImageButton
+            android:id="@+id/btn_chooselevel"
+            android:layout_width="198dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_chooselevel_eng"
+            android:contentDescription="@string/desc_shape_img" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
