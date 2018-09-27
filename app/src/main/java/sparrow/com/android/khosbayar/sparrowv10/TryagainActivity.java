@@ -16,7 +16,7 @@ public class TryagainActivity extends Activity {
     TextView tv_daralt;
     ImageButton btn_retry, btn_chooselevel;
     String stage, stageNumber;
-    Integer shapeCircle, shapeCross, shapeSquare, shapeRombo;
+    Integer shapeCircle, shapeCross, shapeSquare, shapeRombo, shapeStar, shapeHeart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,9 @@ public class TryagainActivity extends Activity {
             shapeCross = extras.getInt("cross");
             shapeSquare = extras.getInt("square");
             shapeRombo = extras.getInt("rombo");
+            shapeStar = extras.getInt("star");
+            shapeHeart = extras.getInt("heart");
+
         }
         btn_retry.setOnClickListener(new ImageButton.OnClickListener() {
 
@@ -54,28 +57,31 @@ public class TryagainActivity extends Activity {
                     startActivity(intent);
                     finish();
                 }
-//                if (stage.equals("2")) {
-//                    Intent intent = new Intent(getApplicationContext(),
-//                            Dashboard2Activity.class);
-//                    intent.putExtra("uy", stageNumber);
-//                    intent.putExtra("shapeCircle", shapeCircle.toString());
-//                    intent.putExtra("shapeCross", shapeCross.toString());
-//                    intent.putExtra("shapeSquare", shapeSquare.toString());
-//                    intent.putExtra("shapeRombo", shapeRombo.toString());
-//                    startActivity(intent);
-//                    finish();
-//                }
-//                if (stage.equals("3")) {
-//                    Intent intent = new Intent(getApplicationContext(),
-//                            Dashboard3Activity.class);
-//                    intent.putExtra("uy", stageNumber);
-//                    intent.putExtra("shapeCircle", shapeCircle.toString());
-//                    intent.putExtra("shapeCross", shapeCross.toString());
-//                    intent.putExtra("shapeSquare", shapeSquare.toString());
-//                    intent.putExtra("shapeRombo", shapeRombo.toString());
-//                    startActivity(intent);
-//                    finish();
-//                }
+                if (stage.equals("2")) {
+                    Intent intent = new Intent(getApplicationContext(),
+                            Dashboard2Activity.class);
+                    intent.putExtra("uy", stageNumber);
+                    intent.putExtra("shapeCircle", shapeCircle.toString());
+                    intent.putExtra("shapeCross", shapeCross.toString());
+                    intent.putExtra("shapeSquare", shapeSquare.toString());
+                    intent.putExtra("shapeRombo", shapeRombo.toString());
+                    intent.putExtra("shapeStar", shapeStar.toString());
+                    startActivity(intent);
+                    finish();
+                }
+                if (stage.equals("3")) {
+                    Intent intent = new Intent(getApplicationContext(),
+                            Dashboard3Activity.class);
+                    intent.putExtra("uy", stageNumber);
+                    intent.putExtra("shapeCircle", shapeCircle.toString());
+                    intent.putExtra("shapeCross", shapeCross.toString());
+                    intent.putExtra("shapeSquare", shapeSquare.toString());
+                    intent.putExtra("shapeRombo", shapeRombo.toString());
+                    intent.putExtra("shapeStar", shapeStar.toString());
+                    intent.putExtra("shapeHeart", shapeHeart.toString());
+                    startActivity(intent);
+                    finish();
+                }
 
             }
         });
@@ -90,18 +96,18 @@ public class TryagainActivity extends Activity {
                     TryagainActivity.this.startActivity(intent);
                     finish();
                 }
-//                if (stage.equals("2")) {
-//                    Intent intent = new Intent(TryagainActivity.this,
-//                            Level2Activity.class);
-//                    TryagainActivity.this.startActivity(intent);
-//                    finish();
-//                }
-//                if (stage.equals("3")) {
-//                    Intent intent = new Intent(TryagainActivity.this,
-//                            Level3Activity.class);
-//                    TryagainActivity.this.startActivity(intent);
-//                    finish();
-//                }
+                if (stage.equals("2")) {
+                    Intent intent = new Intent(TryagainActivity.this,
+                            Level2Activity.class);
+                    TryagainActivity.this.startActivity(intent);
+                    finish();
+                }
+                if (stage.equals("3")) {
+                    Intent intent = new Intent(TryagainActivity.this,
+                            Level3Activity.class);
+                    TryagainActivity.this.startActivity(intent);
+                    finish();
+                }
             }
         });
     }

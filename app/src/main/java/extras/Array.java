@@ -1,8 +1,9 @@
 package extras;
 
 public class Array {
-    private Integer[][] ara = new Integer[100][100];
+    private Integer[][] ara;
     private int clickShape;
+    private int shapeCount;
     private int maxX = 0;
     private int maxY = 0;
     private int click_count = 0;
@@ -11,10 +12,11 @@ public class Array {
 
     }
 
-    public void setArray(Integer[][] ar, int maxX, int maxY) {
+    public void setArray(Integer[][] ar, int maxX, int maxY,int shapeCount) {
         ara = ar;
         this.maxX = maxX;
         this.maxY = maxY;
+        this.shapeCount = shapeCount;
     }
 
     public Integer[][] getArray() {
@@ -42,7 +44,7 @@ public class Array {
 
     public int labirint(int x, int y) {
         if (clickShape == ara[x][y]) {
-            if (ara[x][y] == 3) {
+            if (ara[x][y] == shapeCount-1) {
                 ara[x][y] = 0;
             } else {
                 ara[x][y] = ara[x][y] + 1;

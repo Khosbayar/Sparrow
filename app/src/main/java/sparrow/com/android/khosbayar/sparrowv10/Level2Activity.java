@@ -49,6 +49,7 @@ public class Level2Activity extends Activity {
                 intent.putExtra("shapeRombo", "11");
                 intent.putExtra("shapeStar", "5");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -65,6 +66,7 @@ public class Level2Activity extends Activity {
                 intent.putExtra("shapeRombo", "10");
                 intent.putExtra("shapeStar", "5");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -97,6 +99,8 @@ public class Level2Activity extends Activity {
                 intent.putExtra("shapeRombo", "10");
                 intent.putExtra("shapeStar", "13");
                 startActivity(intent);
+                finish();
+
             }
         });
 
@@ -107,12 +111,13 @@ public class Level2Activity extends Activity {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(getApplicationContext(), Dashboard2Activity.class);
                 intent.putExtra("uy", "2.5");
-                intent.putExtra("shapeCircle", "9");
-                intent.putExtra("shapeCross", "12");
+                intent.putExtra("shapeCircle", "8");
+                intent.putExtra("shapeCross", "11");
                 intent.putExtra("shapeSquare", "11");
-                intent.putExtra("shapeRombo", "12");
-                intent.putExtra("shapeStar", "9");
+                intent.putExtra("shapeRombo", "11");
+                intent.putExtra("shapeStar", "7");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -129,6 +134,7 @@ public class Level2Activity extends Activity {
                 intent.putExtra("shapeRombo", "10");
                 intent.putExtra("shapeStar", "10");
                 startActivity(intent);
+                finish();
             }
         });
     }

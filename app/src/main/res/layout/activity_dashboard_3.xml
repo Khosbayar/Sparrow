@@ -699,7 +699,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:contentDescription="@string/desc_shape_info"
-                    android:src="@drawable/intro_game_normal"
+                    android:src="@drawable/intro_game_legend"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -757,7 +757,7 @@
                         android:orientation="horizontal">
 
                         <ProgressBar
-                            android:id="@+id/dashboardProgressBar1"
+                            android:id="@+id/dashboardProgressBar3"
                             style="@android:style/Widget.ProgressBar.Horizontal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"

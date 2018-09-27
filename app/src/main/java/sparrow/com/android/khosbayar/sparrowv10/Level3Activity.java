@@ -48,6 +48,7 @@ public class Level3Activity extends Activity {
                 intent.putExtra("shapeStar", "8");
                 intent.putExtra("shapeHeart", "8");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -65,6 +66,7 @@ public class Level3Activity extends Activity {
                 intent.putExtra("shapeStar", "12");
                 intent.putExtra("shapeHeart", "8");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -82,6 +84,7 @@ public class Level3Activity extends Activity {
                 intent.putExtra("shapeStar", "14");
                 intent.putExtra("shapeHeart", "12");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -99,6 +102,7 @@ public class Level3Activity extends Activity {
                 intent.putExtra("shapeStar", "15");
                 intent.putExtra("shapeHeart", "13");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -116,6 +120,7 @@ public class Level3Activity extends Activity {
                 intent.putExtra("shapeStar", "15");
                 intent.putExtra("shapeHeart", "15");
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -133,6 +138,7 @@ public class Level3Activity extends Activity {
                 intent.putExtra("shapeStar", "13");
                 intent.putExtra("shapeHeart", "13");
                 startActivity(intent);
+                finish();
             }
         });
     }

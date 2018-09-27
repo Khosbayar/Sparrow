@@ -4,22 +4,20 @@ package extras;
 public class DaraltNiit {
 
 
-    private Integer[][] ara2 = new Integer[100][100];
+    private Integer[][] ara2;
     private int clickShape2;
     private int maxX = 0;
     private int maxY = 0;
     private int niit = 0;
+    private int shapeCount;
 
-    public DaraltNiit() {
 
-    }
-
-    public void setArray2(Integer[][] ar, int maxX, int maxY) {
+    public void setArray2(Integer[][] ar, int maxX, int maxY, int shapeCount) {
         ara2 = ar;
         this.maxX = maxX;
+        this.shapeCount = shapeCount;
         this.maxY = maxY;
     }
-
 
 
     public boolean check2(int x, int y) {
@@ -31,7 +29,7 @@ public class DaraltNiit {
 
     public int labirint2(int x, int y) {
         if (clickShape2 == ara2[x][y]) {
-            if (ara2[x][y] == 3) {
+            if (ara2[x][y] == shapeCount-1) {
                 ara2[x][y] = 0;
             } else {
                 ara2[x][y] = ara2[x][y] + 1;
@@ -41,11 +39,11 @@ public class DaraltNiit {
                 if (check2(x - 1, y))
                     labirint2(x - 1, y);
             }
-            if (x < maxX-1) {
+            if (x < maxX - 1) {
                 if (check2(x + 1, y))
                     labirint2(x + 1, y);
             }
-            if (y < maxY-1) {
+            if (y < maxY - 1) {
                 if (check2(x, y + 1))
                     labirint2(x, y + 1);
             }
@@ -61,54 +59,42 @@ public class DaraltNiit {
     }
 
 
-    public boolean checkFinish2()
-    {
-        int check=0;
-        int local=ara2[0][0];
-        for(int i=0;i<maxX;i++)
-        {
-            for(int j=0;j<maxY;j++)
-            {
-                if(local==ara2[i][j])
+    public boolean checkFinish2() {
+        int check = 0;
+        int local = ara2[0][0];
+        for (int i = 0; i < maxX; i++) {
+            for (int j = 0; j < maxY; j++) {
+                if (local == ara2[i][j])
                     check++;
                 else
                     break;
             }
         }
 
-        if(check == (maxX*maxY))
-        {
+        if (check == (maxX * maxY)) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     public void niitDaralt() {
 
-        while(true)
-        {
+        while (true) {
             clickShape2 = ara2[0][0];
             labirint2(0, 0);
-            if(checkFinish2())
-            {
+            if (checkFinish2()) {
                 break;
-            }
-            else
-            {
+            } else {
                 niit++;
             }
 
         }
     }
 
-    public int getNiit()
-    {
+    public int getNiit() {
         return niit;
     }
-
 
 
 }

@@ -1,33 +1,27 @@
 package sparrow.com.android.khosbayar.sparrowv10;
 
-/**
- * Created by khosbayar on 12/4/17.
- */
-
 import extras.Array;
 import extras.DaraltNiit;
 import extras.RandomArray;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Animation.AnimationListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class Dashboard1Activity extends Activity {
     ImageButton[][] s = new ImageButton[6][4];
-    Button b;
     Integer[][] n = new Integer[6][4];
+    Integer[][] copyN;
     Boolean[][] check_clicked = new Boolean[6][4];
     ProgressBar pb;
-    TextView tvUy, tvRound, tvDarsan, tvClicked, tvNiit, tvTotal;
+    TextView tvRound, tvClicked, tvTotal;
     RandomArray r;
     DaraltNiit daraltNiit;
     int gloi, gloj;
@@ -35,7 +29,6 @@ public class Dashboard1Activity extends Activity {
     Integer NIIT = 0;
     Integer progressPerClick;
     Integer Clicked = 0;
-    Animation animZoomIn, animZoomOut;
     Integer shapeCircle, shapeCross, shapeSquare, shapeRombo;
     String Stagenumber;
     Integer[][] ids = new Integer[][]{
@@ -51,10 +44,10 @@ public class Dashboard1Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_1);
 
-        tvRound = (TextView) findViewById(R.id.textsUyiinToo);
-        pb = (ProgressBar) findViewById(R.id.dashboardProgressBar1);
-        tvClicked = (TextView) findViewById(R.id.textsDarsanToo);
-        tvTotal = (TextView) findViewById(R.id.textsNiittoo);
+        tvRound = findViewById(R.id.textsUyiinToo);
+        pb = findViewById(R.id.dashboardProgressBar1);
+        tvClicked = findViewById(R.id.textsDarsanToo);
+        tvTotal = findViewById(R.id.textsNiittoo);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Stagenumber = extras.getString("uy");
@@ -62,13 +55,13 @@ public class Dashboard1Activity extends Activity {
             shapeCross = Integer.parseInt(extras.getString("shapeCross"));
             shapeSquare = Integer.parseInt(extras.getString("shapeSquare"));
             shapeRombo = Integer.parseInt(extras.getString("shapeRombo"));
-        }else{
+        } else {
             finish();
         }
         tvRound.setText(Stagenumber);
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 4; j++) {
-                s[i][j] = (ImageButton) findViewById(ids[i][j]);
+                s[i][j] = findViewById(ids[i][j]);
             }
         }
         Integer[][] local = new Integer[6][4];
@@ -78,19 +71,19 @@ public class Dashboard1Activity extends Activity {
         r.setValues(6, 4, shapeCircle, shapeCross, shapeSquare, shapeRombo);
 
         n = r.getMas();
-
+        copyN = n.clone();
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 4; j++) {
                 local[i][j] = n[i][j];
-                check_clicked[i][j] = new Boolean(false);
+                check_clicked[i][j] = false;
             }
         }
 
-        daraltNiit.setArray2(local, 6, 4);
+        daraltNiit.setArray2(local, 6, 4, 4);
         daraltNiit.niitDaralt();
         NIIT = daraltNiit.getNiit() + 1;
 
-        tvTotal.setText(NIIT.toString());
+        tvTotal.setText(String.valueOf(NIIT));
         tvClicked.setText("0");
         n = r.getMas();
 
@@ -107,15 +100,14 @@ public class Dashboard1Activity extends Activity {
                             public void onClick(View arg0) {
                                 gloi = indexi;
                                 gloj = indexj;
-//								s[indexi][indexj].startAnimation(animZoomOut);
                                 a = new Array();
-                                a.setArray(n, 6, 4);
+                                a.setArray(n, 6, 4, 4);
                                 a.changeValue(indexi, indexj);
 
                                 Clicked++;
                                 progressPerClick = 100 * Clicked / NIIT;
                                 pb.setProgress(progressPerClick);
-                                tvClicked.setText("" + Clicked);
+                                tvClicked.setText(String.valueOf(Clicked));
                                 n = a.getArray();
                                 check_clicked[indexi][indexj] = true;
                                 if (Clicked > NIIT) {
@@ -144,8 +136,6 @@ public class Dashboard1Activity extends Activity {
                                 }
                                 s[indexi][indexj].setEnabled(false);
                                 setBackground();
-//                                setDisabled(indexi, indexj);
-
                             }
                         });
             }
@@ -164,16 +154,14 @@ public class Dashboard1Activity extends Activity {
                         s[i][j].setBackgroundResource(R.drawable.circle_clicked);
                     }
 
-                }
-                if (n[i][j] == 1) {
+                } else if (n[i][j] == 1) {
                     if (!check_clicked[i][j]) {
                         s[i][j].setBackgroundResource(R.drawable.cross);
                     } else {
                         s[i][j].setBackgroundResource(R.drawable.cross_clicked);
                     }
 
-                }
-                if (n[i][j] == 2) {
+                } else if (n[i][j] == 2) {
                     if (!check_clicked[i][j]) {
                         s[i][j].setBackgroundResource(R.drawable.square);
                     } else {
@@ -181,8 +169,7 @@ public class Dashboard1Activity extends Activity {
 
                     }
 
-                }
-                if (n[i][j] == 3) {
+                } else if (n[i][j] == 3) {
                     if (!check_clicked[i][j]) {
                         s[i][j].setBackgroundResource(R.drawable.rombo);
                     } else {
@@ -195,6 +182,30 @@ public class Dashboard1Activity extends Activity {
     }
 
     public void refreshGame(View view) {
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Restart?")
+                .setMessage("Are you want to restart the game?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        n = copyN.clone();
+                        Clicked = 0;
+                        tvClicked.setText("0");
+                        setBackground();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(R.drawable.main_logo)
+                .show();
     }
 
 }

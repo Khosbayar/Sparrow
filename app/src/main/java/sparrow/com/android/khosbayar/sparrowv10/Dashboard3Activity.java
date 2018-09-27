@@ -1,23 +1,29 @@
 package sparrow.com.android.khosbayar.sparrowv10;
 
 import extras.Array;
+import extras.DaraltNiit;
 import extras.RandomArray;
 
 import android.app.Activity;
-import android.graphics.Typeface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class Dashboard3Activity extends Activity {
     ImageButton[][] s = new ImageButton[10][8];
-    Button b;
     Integer[][] n = new Integer[10][8];
+    Boolean[][] check_clicked = new Boolean[10][8];
     TextView tvUy, tvRound, tvDarsan, tvClicked, tvNiit, tvTotal;
+    ProgressBar pb;
     RandomArray r;
     Array a;
+    Integer NIIT = 0;
+    int gloi, gloj;
+    DaraltNiit daraltNiit;
+    Integer progressPerClick = 0, Clicked = 0;
     Integer shapeCircle, shapeCross, shapeSquare, shapeRombo, shapeStar, shapeHeart;
     String Stagenumber;
     Integer[][] ids = new Integer[][]{
@@ -36,12 +42,14 @@ public class Dashboard3Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_3);
-        tvUy = (TextView) findViewById(R.id.textsUy3);
-        tvRound = (TextView) findViewById(R.id.textsUyiinToo3);
-        tvDarsan = (TextView) findViewById(R.id.textsDarsan3);
-        tvClicked = (TextView) findViewById(R.id.textsDarsanToo3);
-        tvNiit = (TextView) findViewById(R.id.textsNiit3);
-        tvTotal = (TextView) findViewById(R.id.textsNiittoo3);
+        pb = findViewById(R.id.dashboardProgressBar3);
+
+        tvUy = findViewById(R.id.textsUy);
+        tvRound = findViewById(R.id.textsUyiinToo);
+        tvDarsan = findViewById(R.id.textsDarsan);
+        tvClicked = findViewById(R.id.textsDarsanToo);
+        tvNiit = findViewById(R.id.textsNiit);
+        tvTotal = findViewById(R.id.textsNiittoo);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -55,33 +63,91 @@ public class Dashboard3Activity extends Activity {
         } else {
             finish();
         }
+        tvRound.setText(Stagenumber);
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 8; j++) {
-                s[i][j] = (ImageButton) findViewById(ids[i][j]);
+                s[i][j] = findViewById(ids[i][j]);
             }
         }
+
+        Integer[][] local = new Integer[10][8];
+
         r = new RandomArray(this);
+        daraltNiit = new DaraltNiit();
         r.setValuesForLegend(10, 8, shapeCircle, shapeCross, shapeRombo, shapeSquare, shapeStar, shapeHeart);
+
+
+        n = r.getMas();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 8; j++) {
+                local[i][j] = n[i][j];
+                check_clicked[i][j] = false;
+            }
+        }
+
+        daraltNiit.setArray2(local, 10, 8, 6);
+        daraltNiit.niitDaralt();
+        NIIT = daraltNiit.getNiit() + 1;
+        tvTotal.setText(String.valueOf(NIIT));
+        tvClicked.setText("0");
         n = r.getMas();
         setBackground();
+
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 8; j++) {
                 final int indexi, indexj;
                 indexi = i;
                 indexj = j;
-                s[indexi][indexj].setOnClickListener(new ImageButton.OnClickListener() {
+                s[indexi][indexj]
+                        .setOnClickListener(new ImageButton.OnClickListener() {
 
-                    @Override
-                    public void onClick(View arg0) {
-                        // TODO Auto-generated method stub
-                        a = new Array();
-                        a.setArray(n, 10, 8);
-                        a.changeValue(indexi, indexj);
-                        n = a.getArray();
-                        setBackground();
-                    }
-                });
+                            @Override
+                            public void onClick(View arg0) {
+                                gloi = indexi;
+                                gloj = indexj;
+//								s[indexi][indexj].startAnimation(animZoomOut);
+                                a = new Array();
+                                a.setArray(n, 10, 8, 6);
+                                a.changeValue(indexi, indexj);
+
+                                Clicked++;
+                                progressPerClick = 100 * Clicked / NIIT;
+                                pb.setProgress(progressPerClick);
+                                tvClicked.setText(String.valueOf(Clicked));
+                                n = a.getArray();
+                                check_clicked[indexi][indexj] = true;
+                                if (Clicked > NIIT) {
+                                    Intent intent = new Intent(
+                                            getApplicationContext(),
+                                            TryagainActivity.class);
+                                    intent.putExtra("uyiintoo", "3");
+                                    intent.putExtra("circle", shapeCircle);
+                                    intent.putExtra("cross", shapeCross);
+                                    intent.putExtra("square", shapeSquare);
+                                    intent.putExtra("rombo", shapeRombo);
+                                    intent.putExtra("star", shapeStar);
+                                    intent.putExtra("heart", shapeHeart);
+
+                                    intent.putExtra("uy", tvRound.getText());
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    if (a.checkFinish()) {
+                                        Intent intent = new Intent(
+                                                getApplicationContext(),
+                                                NextmissionActivity.class);
+                                        intent.putExtra("darsan",
+                                                tvClicked.getText());
+                                        intent.putExtra("uyiintoo", "3");
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+                                s[indexi][indexj].setEnabled(false);
+                                setBackground();
+                            }
+                        });
             }
         }
 
@@ -92,17 +158,48 @@ public class Dashboard3Activity extends Activity {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 8; j++) {
                 if (n[i][j] == 0) {
-                    s[i][j].setBackgroundResource(R.drawable.circle);
+                    if (!check_clicked[i][j]) {
+                        s[i][j].setBackgroundResource(R.drawable.circle);
+                    } else {
+                        s[i][j].setBackgroundResource(R.drawable.circle_clicked);
+                    }
+
                 } else if (n[i][j] == 1) {
-                    s[i][j].setBackgroundResource(R.drawable.cross);
+                    if (!check_clicked[i][j]) {
+                        s[i][j].setBackgroundResource(R.drawable.cross);
+                    } else {
+                        s[i][j].setBackgroundResource(R.drawable.cross_clicked);
+                    }
+
                 } else if (n[i][j] == 2) {
-                    s[i][j].setBackgroundResource(R.drawable.square);
+                    if (!check_clicked[i][j]) {
+                        s[i][j].setBackgroundResource(R.drawable.square);
+                    } else {
+                        s[i][j].setBackgroundResource(R.drawable.square_clicked);
+
+                    }
+
                 } else if (n[i][j] == 3) {
-                    s[i][j].setBackgroundResource(R.drawable.rombo);
+                    if (!check_clicked[i][j]) {
+                        s[i][j].setBackgroundResource(R.drawable.rombo);
+                    } else {
+                        s[i][j].setBackgroundResource(R.drawable.rombo_clicked);
+                    }
+
                 } else if (n[i][j] == 4) {
-                    s[i][j].setBackgroundResource(R.drawable.star);
+                    if (!check_clicked[i][j]) {
+                        s[i][j].setBackgroundResource(R.drawable.star);
+                    } else {
+                        s[i][j].setBackgroundResource(R.drawable.star_clicked);
+                    }
+
                 } else if (n[i][j] == 5) {
-                    s[i][j].setBackgroundResource(R.drawable.heart);
+                    if (!check_clicked[i][j]) {
+                        s[i][j].setBackgroundResource(R.drawable.heart);
+                    } else {
+                        s[i][j].setBackgroundResource(R.drawable.heart_clicked);
+                    }
+
                 }
             }
         }

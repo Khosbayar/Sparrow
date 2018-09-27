@@ -48,18 +48,18 @@ public class NextmissionActivity extends Activity {
                     startActivity(intent);
                     finish();
                 }
-//                if (stage.equals("2")) {
-//                    Intent intent = new Intent(getApplicationContext(),
-//                            Level2Activity.class);
-//                    startActivity(intent);
-//                    finish();
-//                }
-//                if (stage.equals("3")) {
-//                    Intent intent = new Intent(getApplicationContext(),
-//                            Level3Activity.class);
-//                    startActivity(intent);
-//                    finish();
-//                }
+                if (stage.equals("2")) {
+                    Intent intent = new Intent(getApplicationContext(),
+                            Level2Activity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                if (stage.equals("3")) {
+                    Intent intent = new Intent(getApplicationContext(),
+                            Level3Activity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
