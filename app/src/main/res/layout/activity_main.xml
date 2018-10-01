@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sparrow.com.android.khosbayar.sparrowv10.MainActivity">
+    tools:context="sparrow.com.android.khosbayar.sparrowv10.activities.MainActivity">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/splash_background"
         android:padding="10dp"
-        tools:context=".MainActivity">
+        tools:context=".activities.MainActivity">
 
         <TextView
             android:id="@+id/tv"
