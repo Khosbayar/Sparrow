@@ -5,7 +5,10 @@ import extras.DaraltNiit;
 import extras.RandomArray;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,7 +18,8 @@ import android.widget.TextView;
 public class Dashboard3Activity extends Activity {
     ImageButton[][] s = new ImageButton[10][8];
     Integer[][] n = new Integer[10][8];
-    Boolean[][] check_clicked = new Boolean[10][8];
+    Integer[][] copyN = new Integer[10][8];
+    boolean[][] check_clicked = new boolean[10][8];
     TextView tvUy, tvRound, tvDarsan, tvClicked, tvNiit, tvTotal;
     ProgressBar pb;
     RandomArray r;
@@ -82,7 +86,7 @@ public class Dashboard3Activity extends Activity {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 8; j++) {
                 local[i][j] = n[i][j];
-                check_clicked[i][j] = false;
+                copyN[i][j] = n[i][j];
             }
         }
 
@@ -206,5 +210,37 @@ public class Dashboard3Activity extends Activity {
     }
 
     public void refreshGame(View view) {
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Restart?")
+                .setMessage("Are you want to restart the game?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        for (int i = 0; i < 10; i++) {
+                            for (int j = 0; j < 8; j++) {
+                                n[i][j] = copyN[i][j];
+                                s[i][j].setEnabled(true);
+                            }
+                        }
+                        Clicked = 0;
+                        progressPerClick = 100 * Clicked / NIIT;
+                        pb.setProgress(progressPerClick);
+                        tvClicked.setText("0");
+                        check_clicked = new boolean[10][8];
+                        setBackground();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(R.drawable.main_logo)
+                .show();
     }
 }

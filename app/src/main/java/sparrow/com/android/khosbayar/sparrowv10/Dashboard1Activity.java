@@ -18,8 +18,8 @@ import android.widget.TextView;
 public class Dashboard1Activity extends Activity {
     ImageButton[][] s = new ImageButton[6][4];
     Integer[][] n = new Integer[6][4];
-    Integer[][] copyN;
-    Boolean[][] check_clicked = new Boolean[6][4];
+    Integer[][] copyN = new Integer[6][4];
+    boolean[][] check_clicked = new boolean[6][4];
     ProgressBar pb;
     TextView tvRound, tvClicked, tvTotal;
     RandomArray r;
@@ -71,11 +71,12 @@ public class Dashboard1Activity extends Activity {
         r.setValues(6, 4, shapeCircle, shapeCross, shapeSquare, shapeRombo);
 
         n = r.getMas();
-        copyN = n.clone();
+
+//        local = n;
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 4; j++) {
                 local[i][j] = n[i][j];
-                check_clicked[i][j] = false;
+                copyN[i][j] = n[i][j];
             }
         }
 
@@ -85,7 +86,6 @@ public class Dashboard1Activity extends Activity {
 
         tvTotal.setText(String.valueOf(NIIT));
         tvClicked.setText("0");
-        n = r.getMas();
 
         setBackground();
         for (int i = 0; i < 6; i++) {
@@ -193,9 +193,18 @@ public class Dashboard1Activity extends Activity {
                 .setMessage("Are you want to restart the game?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        n = copyN.clone();
+                        Integer[][] newarr = copyN.clone();
+                        for (int i = 0; i < 6; i++) {
+                            for (int j = 0; j < 4; j++) {
+                                n[i][j] = copyN[i][j];
+                                s[i][j].setEnabled(true);
+                            }
+                        }
                         Clicked = 0;
+                        progressPerClick = 100 * Clicked / NIIT;
+                        pb.setProgress(progressPerClick);
                         tvClicked.setText("0");
+                        check_clicked = new boolean[6][4];
                         setBackground();
                     }
                 })
